@@ -1212,12 +1212,19 @@
 				leftX += halfStroke;
 				rightX -= halfStroke;
 				top += halfStroke;
-			}
+			}			
 
 			ctx.beginPath();
 
 			ctx.fillStyle = this.fillColor;
 			ctx.strokeStyle = this.strokeColor;
+
+			// Darken colors if bar should be highlighted
+			if (this.highlighted) {
+				ctx.fillStyle = tinycolor(this.fillColor).darken(25).toString();
+				ctx.strokeStyle = tinycolor(this.strokeColor).darken(25).toString();
+			}
+			
 			ctx.lineWidth = this.strokeWidth;
 
 			// Draw base bar
@@ -1230,11 +1237,15 @@
 				ctx.stroke();
 			}
 
-			ctx.beginPath()
 
 			// Draw cap
-			ctx.fillStyle = this.capColor;
-			ctx.strokeStyle = this.strokeColor;
+			ctx.beginPath()
+
+			if (this.highlighted) {
+				ctx.fillStyle = tinycolor(this.capColor).darken(10).toString();
+				ctx.strokeStyle = tinycolor(this.capColor).darken(10).toString();
+			};
+
 			ctx.lineWidth = this.strokeWidth;
 
 			ctx.moveTo(leftX, top - capSize);

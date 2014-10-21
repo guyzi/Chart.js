@@ -23,7 +23,7 @@ var srcDir = './src/';
 gulp.task('build', function(){
 
 	// Default to all of the chart types, with Chart.Core first
-	var srcFiles = [FileName('Core')],
+	var srcFiles = ['lib/*', FileName('Core')],
 		isCustom = !!(util.env.types),
 		outputDir = (isCustom) ? 'custom' : '.';
 	if (isCustom){

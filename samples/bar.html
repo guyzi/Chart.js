@@ -2,9 +2,7 @@
 <html>
   <head>
     <title>Bar Chart</title>
-    <!-- <script src="../Chart.js"></script>-->
-    <script src="../src/Chart.Core.js"></script>
-    <script src="../src/Chart.Bar.js"></script>
+    <script src="../Chart.js"></script>
   </head>
   <body>
     <button id="#btn">Hide purple</button>
@@ -22,6 +20,7 @@
         strokeColor : "#c8c8c8", //"rgba(220,220,220,0.8)",
         highlightFill: "rgba(220,220,220,0.75)",
         highlightStroke: "rgba(220,220,220,1)",
+        highlightedBarIndex: 3,
         data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
       },
       {
@@ -49,6 +48,7 @@
       barDatasetSpacing: 30,
       showLabelsOnBars: true, 
       barLabelFontColor:"gray",
+      showScale: false,
 
     });
   }
