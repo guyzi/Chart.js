@@ -1241,6 +1241,8 @@
 			// Draw cap
 			ctx.beginPath()
 
+			ctx.fillStyle = this.capColor
+			ctx.strokeStyle = this.capColor
 			if (this.highlighted) {
 				ctx.fillStyle = tinycolor(this.capColor).darken(10).toString();
 				ctx.strokeStyle = tinycolor(this.capColor).darken(10).toString();
