@@ -156,17 +156,7 @@
 			onAnimationProgress: function(){},
 
 			// Function - Will fire on animation completion.
-			onAnimationComplete: function(){}
-
-			// Boolean - Display value labels on top of bars
-			showLabelsOnBars : false,
-
-			// Number - Bar label font size
-			barLabelFontSize:10,
-
-			// String - Bar label font color
-			barLabelFontColor:"#6D6D6D"
-
+			onAnimationComplete: function(){},
 		}
 	};
 
@@ -1256,6 +1246,21 @@
 				ctx.stroke();
 			}
 
+			ctx.strokeStyle = '#000000';
+			//if (this.showLabelsOnBars) {
+				this.drawBarText(ctx, top, this.x, 24, // TODO: Take font size and font color values from config
+												 this.value, '#000000');
+			//}
+
+		},
+		drawBarText : function(ctx,top, left, fontSize, text, textColor) {
+			var existingFill = ctx.fillStyle;
+			top = top + fontSize -(fontSize + fontSize * 6/10);
+			ctx.fillStyle = textColor;
+			ctx.textAlign = "center";
+			ctx.font = fontSize + "pt";
+			ctx.fillText(text, left, top);
+			ctx.fillStyle = existingFill;
 		},
 		height : function(){
 			return this.base - this.y;

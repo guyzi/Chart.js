@@ -1,61 +1,63 @@
 <!doctype html>
 <html>
-	<head>
-		<title>Bar Chart</title>
-		<!-- <script src="../Chart.js"></script>-->
-		<script src="../src/Chart.Core.js"></script>
-		<script src="../src/Chart.Bar.js"></script>
-	</head>
-	<body>
-		<button id="#btn">Hide purple</button>
-		<div style="width: 50%">
-			<canvas id="canvas" height="450" width="600"></canvas>
-		</div>
+  <head>
+    <title>Bar Chart</title>
+    <!-- <script src="../Chart.js"></script>-->
+    <script src="../src/Chart.Core.js"></script>
+    <script src="../src/Chart.Bar.js"></script>
+  </head>
+  <body>
+    <button id="#btn">Hide purple</button>
+    <div style="width: 50%">
+      <canvas id="canvas" height="450" width="600"></canvas>
+    </div>
 
 
-	<script>
-	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-	ds = [
-			{
-				capColor: '#159adf',
-				fillColor : "#c8c8c8", // "rgba(220,220,220,0.5)",
-				strokeColor : "#c8c8c8", //"rgba(220,220,220,0.8)",
-				highlightFill: "rgba(220,220,220,0.75)",
-				highlightStroke: "rgba(220,220,220,1)",
-				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-			},
-			{
-				capColor: '#ce66ec',
-				fillColor : "#c8c8c8", // "rgba(220,220,220,0.5)",
-				strokeColor : "#c8c8c8", //"rgba(220,220,220,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-			}
-		];
+  <script>
+  var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+  ds = [
+      {
+        capColor: '#159adf',
+        fillColor : "#c8c8c8", // "rgba(220,220,220,0.5)",
+        strokeColor : "#c8c8c8", //"rgba(220,220,220,0.8)",
+        highlightFill: "rgba(220,220,220,0.75)",
+        highlightStroke: "rgba(220,220,220,1)",
+        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+      },
+      {
+        capColor: '#ce66ec',
+        fillColor : "#c8c8c8", // "rgba(220,220,220,0.5)",
+        strokeColor : "#c8c8c8", //"rgba(220,220,220,0.8)",
+        highlightFill : "rgba(151,187,205,0.75)",
+        highlightStroke : "rgba(151,187,205,1)",
+        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+      }
+    ];
 
-	var barChartData = {
-		labels : ["January","February","March","April","May","June","July"],
-		datasets : ds
+  var barChartData = {
+    labels : ["January","February","March","April","May","June","July"],
+    datasets : ds
 
-	}
-	window.onload = function(){
-		var ctx = document.getElementById("canvas").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true,
-			scaleShowGridLines : false,
-			barStrokeWidth : 1,
-			barValueSpacing: 10,
-			barDatasetSpacing: 30,
+  }
+  window.onload = function(){
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myBar = new Chart(ctx).Bar(barChartData, {
+      responsive : true,
+      scaleShowGridLines : false,
+      barStrokeWidth : 1,
+      barValueSpacing: 10,
+      barDatasetSpacing: 30,
+      showLabelsOnBars: true, 
+      barLabelFontColor:"gray",
 
-		});
-	}
+    });
+  }
 
-	document.getElementById('#btn').onclick = function() {
-		window.myBar.datasets.splice(1)
-		window.myBar.update()
-	};
+  document.getElementById('#btn').onclick = function() {
+    window.myBar.datasets.splice(1)
+    window.myBar.update()
+  };
 
-	</script>
-	</body>
+  </script>
+  </body>
 </html>

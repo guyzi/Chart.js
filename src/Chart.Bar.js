@@ -32,7 +32,16 @@
 		barDatasetSpacing : 1,
 
 		//String - A legend template
-		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+
+		// Boolean - Display value labels on top of bars
+		showLabelsOnBars : false,
+
+		// Number - Bar label font size
+		barLabelFontSize:10,
+
+		// String - Bar label font color
+		barLabelFontColor:"#6D6D6D"
 
 	};
 
