@@ -98,6 +98,7 @@
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
 					strokeColor : dataset.strokeColor,
+					capColor : dataset.capColor,
 					bars : []
 				};
 
@@ -111,6 +112,7 @@
 						datasetLabel: dataset.label,
 						strokeColor : dataset.strokeColor,
 						fillColor : dataset.fillColor,
+						capColor : dataset.capColor,
 						highlightFill : dataset.highlightFill || dataset.fillColor,
 						highlightStroke : dataset.highlightStroke || dataset.strokeColor
 					}));

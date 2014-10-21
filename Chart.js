@@ -238,7 +238,7 @@
 				if (filterCallback(currentItem)){
 					return currentItem;
 				}
-			};
+			}
 		},
 		findPreviousWhere = helpers.findPreviousWhere = function(arrayToSearch, filterCallback, startIndex){
 			// Default to end of the array
@@ -250,7 +250,7 @@
 				if (filterCallback(currentItem)){
 					return currentItem;
 				}
-			};
+			}
 		},
 		inherits = helpers.inherits = function(extensions){
 			//Basic javascript inheritance based on the model created in Backbone.js
@@ -1220,16 +1220,32 @@
 			ctx.strokeStyle = this.strokeColor;
 			ctx.lineWidth = this.strokeWidth;
 
-			// It'd be nice to keep this class totally generic to any rectangle
-			// and simply specify which border to miss out.
+			// Draw base bar
 			ctx.moveTo(leftX, this.base);
-			ctx.lineTo(leftX, top);
-			ctx.lineTo(rightX, top);
+			ctx.lineTo(leftX, top - 10);
+			ctx.lineTo(rightX, top - 10);
 			ctx.lineTo(rightX, this.base);
 			ctx.fill();
 			if (this.showStroke){
 				ctx.stroke();
 			}
+
+			ctx.beginPath()
+
+			// Draw cap
+			ctx.fillStyle = this.capColor;
+			ctx.strokeStyle = this.strokeColor;
+			ctx.lineWidth = this.strokeWidth;
+
+			ctx.moveTo(leftX, top - 10);
+			ctx.lineTo(leftX, top);
+			ctx.lineTo(rightX, top);
+			ctx.lineTo(rightX, top - 10);
+			ctx.fill();
+			if (this.showStroke){
+				ctx.stroke();
+			}
+
 		},
 		height : function(){
 			return this.base - this.y;
@@ -1997,14 +2013,14 @@
 						xAbsolute = this.calculateX(barIndex) - (xWidth/2),
 						barWidth = this.calculateBarWidth(datasetCount);
 
-					return xAbsolute + (barWidth * datasetIndex) + (datasetIndex * options.barDatasetSpacing) + barWidth/2;
+					return xAbsolute + (barWidth * datasetIndex) + (datasetIndex * options.barValueSpacing) + barWidth/2;
 				},
 				calculateBaseWidth : function(){
-					return (this.calculateX(1) - this.calculateX(0)) - (2*options.barValueSpacing);
+					return (this.calculateX(1) - this.calculateX(0)) - (2*options.barDatasetSpacing);
 				},
 				calculateBarWidth : function(datasetCount){
 					//The padding between datasets is to the right of each bar, providing that there are more than 1 dataset
-					var baseWidth = this.calculateBaseWidth() - ((datasetCount - 1) * options.barDatasetSpacing);
+					var baseWidth = this.calculateBaseWidth() - ((datasetCount - 1) * options.barValueSpacing);
 
 					return (baseWidth / datasetCount);
 				}
@@ -2042,6 +2058,7 @@
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
 					strokeColor : dataset.strokeColor,
+					capColor : dataset.capColor,
 					bars : []
 				};
 
@@ -2055,6 +2072,7 @@
 						datasetLabel: dataset.label,
 						strokeColor : dataset.strokeColor,
 						fillColor : dataset.fillColor,
+						capColor : dataset.capColor,
 						highlightFill : dataset.highlightFill || dataset.fillColor,
 						highlightStroke : dataset.highlightStroke || dataset.strokeColor
 					}));

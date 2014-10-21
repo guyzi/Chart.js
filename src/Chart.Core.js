@@ -158,6 +158,15 @@
 			// Function - Will fire on animation completion.
 			onAnimationComplete: function(){}
 
+			// Boolean - Display value labels on top of bars
+			showLabelsOnBars : false,
+
+			// Number - Bar label font size
+			barLabelFontSize:10,
+
+			// String - Bar label font color
+			barLabelFontColor:"#6D6D6D"
+
 		}
 	};
 
@@ -1204,7 +1213,8 @@
 				leftX = this.x - halfWidth,
 				rightX = this.x + halfWidth,
 				top = this.base - (this.base - this.y),
-				halfStroke = this.strokeWidth / 2;
+				halfStroke = this.strokeWidth / 2,
+				capSize = ctx.canvas.height / 100;
 
 			// Canvas doesn't allow us to stroke inside the width so we can
 			// adjust the sizes to fit if we're setting a stroke on the line
@@ -1220,16 +1230,32 @@
 			ctx.strokeStyle = this.strokeColor;
 			ctx.lineWidth = this.strokeWidth;
 
-			// It'd be nice to keep this class totally generic to any rectangle
-			// and simply specify which border to miss out.
+			// Draw base bar
 			ctx.moveTo(leftX, this.base);
-			ctx.lineTo(leftX, top);
-			ctx.lineTo(rightX, top);
+			ctx.lineTo(leftX, top - capSize);
+			ctx.lineTo(rightX, top - capSize);
 			ctx.lineTo(rightX, this.base);
 			ctx.fill();
 			if (this.showStroke){
 				ctx.stroke();
 			}
+
+			ctx.beginPath()
+
+			// Draw cap
+			ctx.fillStyle = this.capColor;
+			ctx.strokeStyle = this.strokeColor;
+			ctx.lineWidth = this.strokeWidth;
+
+			ctx.moveTo(leftX, top - capSize);
+			ctx.lineTo(leftX, top);
+			ctx.lineTo(rightX, top);
+			ctx.lineTo(rightX, top - capSize);
+			ctx.fill();
+			if (this.showStroke){
+				ctx.stroke();
+			}
+
 		},
 		height : function(){
 			return this.base - this.y;
