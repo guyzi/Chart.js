@@ -44,7 +44,13 @@
 	window.onload = function(){
 		var ctx = document.getElementById("canvas").getContext("2d");
 		window.myLine = new Chart(ctx).Line(lineChartData, {
-			responsive: true
+			responsive: true,
+			scaleShowGridLines : false,
+			showScale: false,
+			pointDotRadius : 6,
+			datasetFill : false,
+
+
 		});
 	}
 

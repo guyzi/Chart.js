@@ -104,6 +104,9 @@
 			// String - Tooltip background colour
 			tooltipFillColor: "rgba(0,0,0,0.8)",
 
+			// String - Tooltip background colour
+			tooltipStrokeColor: "rgba(0,0,0,0.8)",
+
 			// String - Tooltip label font declaration for the scale label
 			tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
 
@@ -960,6 +963,7 @@
 						yPadding: this.options.tooltipYPadding,
 						xOffset: this.options.tooltipXOffset,
 						fillColor: this.options.tooltipFillColor,
+						strokeColor: this.options.tooltipStrokeColor,
 						textColor: this.options.tooltipFontColor,
 						fontFamily: this.options.tooltipFontFamily,
 						fontStyle: this.options.tooltipFontStyle,
@@ -986,6 +990,7 @@
 							xPadding: this.options.tooltipXPadding,
 							yPadding: this.options.tooltipYPadding,
 							fillColor: this.options.tooltipFillColor,
+							strokeColor: this.options.tooltipStrokeColor,
 							textColor: this.options.tooltipFontColor,
 							fontFamily: this.options.tooltipFontFamily,
 							fontStyle: this.options.tooltipFontStyle,
@@ -993,6 +998,8 @@
 							caretHeight: this.options.tooltipCaretSize,
 							cornerRadius: this.options.tooltipCornerRadius,
 							text: template(this.options.tooltipTemplate, Element),
+							subtitle: template(this.options.tooltipSubtitleTemplate, Element),
+							secondSubtitle: template(this.options.tooltipSecondSubtitleTemplate, Element),
 							chart: this.chart
 						}).draw();
 					}, this);
@@ -1286,9 +1293,7 @@
 	Chart.Tooltip = Chart.Element.extend({
 		draw : function(){
 
-			var ctx = this.chart.ctx;
-
-			ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
+			var ctx = this.chart.ctx;			
 
 			this.xAlign = "center";
 			this.yAlign = "above";
@@ -1296,8 +1301,21 @@
 			//Distance between the actual element.y position and the start of the tooltip caret
 			var caretPadding = 2;
 
-			var tooltipWidth = ctx.measureText(this.text).width + 2*this.xPadding,
-				tooltipRectHeight = this.fontSize + 2*this.yPadding,
+			ctx.font = fontString(this.fontSize*1.25,this.fontStyle,this.fontFamily);
+			var textWidth = ctx.measureText(this.text).width;
+
+			ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
+			var subtitleWidth = ctx.measureText(this.subtitle).width;
+
+			ctx.font = fontString(this.fontSize*0.75,this.fontStyle,this.fontFamily);
+			var secondSubtitleWidth = ctx.measureText(this.secondSubtitle).width;
+
+			var maxWidth = Math.max(textWidth,
+															subtitleWidth,
+															secondSubtitleWidth)
+
+			var tooltipWidth = maxWidth + 2*this.xPadding,
+				tooltipRectHeight = (this.fontSize*5) + 4*this.yPadding,
 				tooltipHeight = tooltipRectHeight + this.caretHeight + caretPadding;
 
 			if (this.x + tooltipWidth/2 >this.chart.width){
@@ -1349,14 +1367,27 @@
 				break;
 			}
 
+			ctx.strokeStyle = this.strokeColor;
 			drawRoundedRectangle(ctx,tooltipX,tooltipY,tooltipWidth,tooltipRectHeight,this.cornerRadius);
+			ctx.stroke();
 
 			ctx.fill();
 
 			ctx.fillStyle = this.textColor;
-			ctx.textAlign = "center";
+			ctx.textAlign = "left";
 			ctx.textBaseline = "middle";
-			ctx.fillText(this.text, tooltipX + tooltipWidth/2, tooltipY + tooltipRectHeight/2);
+
+			ctx.fillStyle = '#4a4a4a';
+			ctx.font = fontString(this.fontSize * 1.25,this.fontStyle,this.fontFamily);
+			ctx.fillText(this.text, tooltipX + this.xPadding, tooltipY + this.fontSize * 1.5);
+
+			ctx.fillStyle = '#4a4a4a';
+			ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
+			ctx.fillText(this.subtitle, tooltipX + this.xPadding, tooltipY + this.fontSize * 3.5);
+
+			ctx.fillStyle = '#b0b0b0';
+			ctx.font = fontString(this.fontSize * 0.75,this.fontStyle,this.fontFamily);
+			ctx.fillText(this.secondSubtitle, tooltipX + this.xPadding, tooltipY + this.fontSize * 5);
 		}
 	});
 
@@ -1410,8 +1441,11 @@
 
 		},
 		draw : function(){
-			drawRoundedRectangle(this.ctx,this.x,this.y - this.height/2,this.width,this.height,this.cornerRadius);
+			this.ctx.strokeStyle = this.strokeColor;
+			drawRoundedRectangle(this.ctx,this.x,this.y - this.height/2,this.width,this.height,this.cornerRadius);			
 			var ctx = this.ctx;
+			ctx.stroke() // Draw the border
+
 			ctx.fillStyle = this.fillColor;
 			ctx.fill();
 			ctx.closePath();
